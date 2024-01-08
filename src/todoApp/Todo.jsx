@@ -49,21 +49,10 @@ const Todo = () => {
 
   return (
     <>
-      <button
-        className="logout"
-        style={{
-          float: "right",
-          margin: "20px",
-          width: "10%",
-          padding: "5px",
-          borderRadius: "50px",
-          border: "none",
-        }}
-        onClick={handleLogOut}
-      >
-        LogOut
-      </button>
       <TodoStyle>
+        <button className="logout" onClick={handleLogOut}>
+          LogOut
+        </button>
         <div className="todo">
           <div className="container pt-5 bt-5">
             <div className="row border gap-2 py-3 px-3">
@@ -140,6 +129,7 @@ const Todo = () => {
             </div>
           </div>
         </div>
+        {/* <Tbale */}
       </TodoStyle>
     </>
   );
@@ -148,9 +138,18 @@ const Todo = () => {
 export default Todo;
 export const TodoStyle = styled.div`
   background-color: #080710;
-
   padding: 60px 0;
-
+  .logout {
+    float: right;
+    margin-right: 30px;
+    width: 10%;
+    padding: 5px;
+    border-radius: 50px;
+    border: none;
+    @media screen and (max-width: 575px) {
+      width: 25%;
+    }
+  }
   .todo {
     background-color: rgba(255, 255, 255, 0.13);
     backdrop-filter: blur(10px);
@@ -158,14 +157,11 @@ export const TodoStyle = styled.div`
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
     width: 50%;
     margin: 50px auto;
-    /* box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5); */
     padding: 20px 30px;
+    @media screen and (max-width: 576px) {
+      width: 90%;
+    }
   }
-
-  /* .btn_icon{
-    width: 5%;
-    height: 50px;
-  } */
   .del {
     color: red;
     cursor: pointer;

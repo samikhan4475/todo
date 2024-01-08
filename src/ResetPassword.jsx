@@ -16,16 +16,15 @@ const validate = (values) => {
 };
 const ResetPassword = () => {
   const { token } = useParams();
-
   const navigate = useNavigate();
-  const [forgetLoader, setForgetLoader] = useState(false);
+  const [resetLoader, setresetLoader] = useState(false);
   const formik = useFormik({
     initialValues: {
       password: "",
     },
     validate,
     onSubmit: async (values, actions) => {
-      setForgetLoader(true);
+      setresetLoader(true);
       try {
         if (token) {
           const response = await API.post(
@@ -44,14 +43,14 @@ const ResetPassword = () => {
         } else {
           toast.warn("token is mandatory");
         }
-        setForgetLoader(false);
+        setresetLoader(false);
       } catch (err) {
         if (err?.response?.data?.detail) {
           toast.error(err?.response?.data?.detail);
         } else {
           toast.error("Something went wrong");
         }
-        setForgetLoader(false);
+        setresetLoader(false);
       }
     },
   });
@@ -65,13 +64,13 @@ const ResetPassword = () => {
           id="password"
           name="password"
           onChange={formik.handleChange}
-          value={formik.values.email}
+          value={formik.values.password}
         />
         {formik.errors.password ? (
           <div className="error">{formik.errors.password}</div>
         ) : null}
-        <button type="submit" className="login">
-          {forgetLoader ? <Loader /> : "reset password"}
+        <button type="submit" className="login" disabled={resetLoader}>
+          {resetLoader ? <Loader /> : "reset password"}
         </button>
       </form>
     </LoginStyle>

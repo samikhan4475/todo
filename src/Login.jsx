@@ -50,11 +50,6 @@ const Login = () => {
     },
     validate,
     onSubmit: async (values) => {
-      // API.post("/api/auth/login",values).then((res)=>{
-
-      // }).catch((err)=>{
-
-      // })
       try {
         setLoading(true);
         const response = await API.post("/api/auth/login", values);
@@ -79,7 +74,7 @@ const Login = () => {
   });
   return (
     <>
-      <LoginStyle>
+      <LoginStyle padding="100px 0">
         <form onSubmit={formik.handleSubmit}>
           <h2 className="text-center mb-5 text-white">Login</h2>
           <label htmlFor="">Email or Phone:</label>
@@ -117,7 +112,7 @@ const Login = () => {
           <Link onClick={handleForget} style={{ textDecoration: "underline" }}>
             Forget Password?
           </Link>
-          <button type="submit" className="login">
+          <button type="submit" className="login" disabled={loading}>
             {loading ? <Loader /> : "Login"}
           </button>
           <div className="center">
@@ -140,8 +135,12 @@ const Login = () => {
 export default Login;
 export const LoginStyle = styled.div`
   background-color: #080710;
-  padding: 26px 0;
-  /* height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 100%; */
+  padding: ${(prop) => (prop.padding ? prop.padding : "180px 0")};
+
   .icon {
     color: black;
     font-size: 23px;
@@ -189,7 +188,8 @@ export const LoginStyle = styled.div`
       margin: 10px 0 20px;
     }
     ::placeholder {
-      color: #e5e5e5;
+      color: #000;
+      font-weight: 600;
     }
     .password_eyes {
       background-color: #ffffff;
@@ -201,11 +201,12 @@ export const LoginStyle = styled.div`
       color: #fff;
       display: flex;
       align-items: center;
+      justify-content: center;
       input {
         padding: 0 !important;
       }
     }
-   
+
     .login {
       width: 100%;
       background-color: #ffffff;
@@ -229,6 +230,22 @@ export const LoginStyle = styled.div`
     .signUp {
       float: none;
       margin: 0;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    form {
+      width: 60%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    form {
+      width: 63%;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    form {
+      width: 91%;
     }
   }
 `;
