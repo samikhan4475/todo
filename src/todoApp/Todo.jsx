@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonData from "./buttonData";
-import Button from "react-bootstrap/Button";
+import { FaPlus } from "react-icons/fa6";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import Login from "../Login";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ModalForm from "./ModalForm";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 const Todo = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState(1);
@@ -13,6 +16,7 @@ const Todo = () => {
   const [index, setIndex] = useState("");
   const [check, setCheck] = useState("");
   const [todo, setTodo] = useState([]);
+  const [show, setShow] = useState(false);
   const handleClick = (item) => {
     setTab(item);
   };
@@ -40,13 +44,13 @@ const Todo = () => {
     setValue(editTodo[ind]);
     setIndex(ind);
   };
-  const handleDoneTask = () => {};
   const handleLogOut = () => {
     localStorage.removeItem("user");
     toast.success("Logged Out");
     navigate("/");
   };
-
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
       <TodoStyle>
@@ -55,8 +59,8 @@ const Todo = () => {
         </button>
         <div className="todo">
           <div className="container pt-5 bt-5">
-            <div className="row border gap-2 py-3 px-3">
-              <div className="col-12">
+            <div className="row  gap-2 py-3 px-3">
+              {/* <div className="col-12">
                 <input
                   type="text"
                   class="form-control input shadow-none border px-3 py-2"
@@ -64,15 +68,15 @@ const Todo = () => {
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
-              </div>
+              </div> */}
               <div className="col-12">
                 <Button
                   variant="info"
-                  onClick={handleAdd}
-                  className="text-white"
+                  // onClick={handleAdd}
+                  onClick={handleShow}
+                  className="text-white w-25"
                 >
-                  {" "}
-                  Add new task
+                  <FaPlus /> Add Task
                 </Button>
               </div>
             </div>
@@ -93,6 +97,8 @@ const Todo = () => {
               ))}
             </div>
             <div className="d-grid gap-3 map">
+              {/* <CustomizedTables /> */}
+
               {todo.map((el, ind) => (
                 <div
                   className="col-12 d-flex align-items-center justify-content-between border p-2"
@@ -118,9 +124,7 @@ const Todo = () => {
           </div>
           <div className="row mt-3">
             <div className="col-6">
-              <Button variant="danger" onClick={handleDoneTask}>
-                Delte done task{" "}
-              </Button>
+              <Button variant="danger">Delte done task </Button>
             </div>
             <div className="col-6">
               <Button variant="danger" onClick={() => setTodo([])}>
@@ -129,19 +133,26 @@ const Todo = () => {
             </div>
           </div>
         </div>
-        {/* <Tbale */}
+        <Modal show={show} onHide={handleClose} dialogClassName="modal-90w">
+          <Modal.Header closeButton>
+            <Modal.Title>Todo </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {" "}
+            <ModalForm />
+          </Modal.Body>
+        </Modal>
       </TodoStyle>
     </>
   );
 };
-
 export default Todo;
 export const TodoStyle = styled.div`
   background-color: #080710;
-  padding: 60px 0;
+  padding: 79px 0;
   .logout {
     float: right;
-    margin-right: 30px;
+    margin: -50px 30px 0 0;
     width: 10%;
     padding: 5px;
     border-radius: 50px;
